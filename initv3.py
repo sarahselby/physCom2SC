@@ -1,4 +1,4 @@
-# import random
+import random
 from paho.mqtt import client as mqtt_client
 from nltk.sentiment import SentimentIntensityAnalyzer
 import json
