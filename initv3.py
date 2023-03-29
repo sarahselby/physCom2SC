@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # import random
 from paho.mqtt import client as mqtt_client
 from nltk.sentiment import SentimentIntensityAnalyzer
