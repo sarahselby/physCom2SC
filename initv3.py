@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-
+# import libraries
 import random
 from paho.mqtt import client as mqtt_client
 from nltk.sentiment import SentimentIntensityAnalyzer
@@ -8,6 +7,7 @@ import RPi.GPIO as io
 import board
 import time
 
+# set the pin mode on pi zero
 io.setmode(io.BCM)
 
 # define the pins for the water and poison pump
