@@ -336,7 +336,7 @@ img {
   	</section>
   	
 
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<!-- jQuery, Popper.js, Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<!-- mqtt -->
@@ -344,11 +344,11 @@ img {
 
 	<script>
 
-		// COUNT CHARS LEFT
+		// Count number of characters left for 140 word count
 		const textarea = document.querySelector("textarea");
 		const sendBtn = document.querySelector(".mqtt-form button");
 		const textareaChars = document.querySelector("#charsLeft");
-
+        // listen for input being added to text box
 		textarea.addEventListener("input", function(event) {
 		    const target = event.currentTarget;
 		    const maxLength = target.getAttribute("maxlength");
@@ -360,7 +360,7 @@ img {
 		    else {
 		    	sendBtn.classList.add("disabled");
 		    }
-
+            // if current character count is greater or equal to max length, disable send button
 		    if (currentLength >= maxLength) {
 		    	textareaChars.innerHTML = `You have  <span class="text-danger">${maxLength - currentLength}</span> characters left`;
 		    	sendBtn.classList.add("disabled");
@@ -371,7 +371,9 @@ img {
 		});
 
 		// GET FORM DATA / SEND
+        // get current date
 		let now = new Date();
+        // convert to ISO format
 		let isoStr = now.toISOString();
 		let nowFormatted = isoStr.split('T', 2)[0] + " " + isoStr.split('T', 2)[1];
 		console.log(nowFormatted);
@@ -381,32 +383,27 @@ img {
 
 		// start
 		let startBtn = document.querySelector(".start-btn");
+        // listen for clicks on send button
 		startBtn.addEventListener('click', function(){
-			document.querySelector('.start-btn').innerHTML = 'sending..';
-			setTimeout(function(){document.querySelector('.start-btn').innerHTML = 'sent';}, 1000);
+            // change button text to 'sending'
+			document.querySelector('.start-btn').innerHTML = 'Sending..';
 		  	const newDataStr = createObj();
 		  	console.log("sending ", newDataStr);
-		  	//document.querySelector('.json-text').innerHTML = newDataStr;
-
-		     //Send your message (also possible to serialize it as JSON or protobuf or just use a string, no limitations)
+            setTimeout(function(){document.querySelector('.start-btn').innerHTML = 'Send';  document.querySelector("textarea").value = '';}, 1000);
+         
+		     // send message to MQTT broker
 		     let message = new Paho.MQTT.Message(newDataStr);
 		     message.destinationName = topic;
 		     message.qos = 0;
 		     client.send(message);
+
 		});
 
 
-		function getTimeSTamp() {
-			let now = new Date();
-			let isoStr = now.toISOString();
-			let nowFormatted = isoStr.split('T', 2)[0] + " " + isoStr.split('T', 2)[1];
-			return nowFormatted;
-		}
-
-
 		function createObj() {
+            // create empty object
 			obj = {};
-			obj["timeStamp"] = getTimeSTamp();
+            // store user's message in 'msg'
 			obj["msg"] = mqttForm.message.value;
 			return JSON.stringify(obj, null, '  ');
 		}
@@ -435,7 +432,7 @@ img {
 		     //connection attempt timeout in seconds
 		     timeout: 3,
 		     userName: 'sarahselby',
-		     password: 'aio_ciZt75e2CiDGrriOGxVLCVCteY5t',
+		     password: 'xxxxx',
 		     useSSL: true,
 		     //Gets Called if the connection has successfully been established
 		     onSuccess: function () {
