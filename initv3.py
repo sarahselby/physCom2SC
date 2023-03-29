@@ -1,5 +1,6 @@
-# import libraries
-import random
+#!/usr/bin/env python3
+
+# import random
 from paho.mqtt import client as mqtt_client
 from nltk.sentiment import SentimentIntensityAnalyzer
 import json
@@ -7,7 +8,6 @@ import RPi.GPIO as io
 import board
 import time
 
-# set the pin mode on pi zero
 io.setmode(io.BCM)
 
 # define the pins for the water and poison pump
@@ -55,7 +55,7 @@ def activateLed(sentiment):
 
 
 # connect to mqtt
-def connect_mqtt() -> mqtt_client:
+def connect_mqtt():
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
             print("Connected to MQTT Broker!")
